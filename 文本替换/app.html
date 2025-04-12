@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>规则管理</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #4361ee;
+      --primary-hover: #3a56d4;
+      --success: #06d6a0;
+      --danger: #ef476f;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
+      --border: #dee2e6;
+      --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      --transition: all 0.2s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #f5f7fb;
+      color: var(--dark);
+      line-height: 1.6;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 14px;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+      outline: none;
+    }
+
+    .btn i {
+      margin-right: 8px;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--border);
+      color: var(--gray);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--light);
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .search-filter {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .search-box {
+      flex: 1;
+      position: relative;
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray);
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 10px 16px 10px 40px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 14px;
+      transition: var(--transition);
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+    }
+
+    .filter-select {
+      min-width: 160px;
+    }
+
+    .filter-select select {
+      width: 100%;
+      padding: 10px 16px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 14px;
+      background-color: white;
+      cursor: pointer;
+    }
+
+    .table-container {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background-color: white;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    thead {
+      background-color: #f8f9fa;
+    }
+
+    th {
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 500;
+      color: var(--gray);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    td {
+      padding: 16px;
+      border-top: 1px solid var(--border);
+      font-size: 14px;
+    }
+
+    tr:hover td {
+      background-color: rgba(67, 97, 238, 0.03);
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .status-active {
+      background-color: rgba(6, 214, 160, 0.1);
+      color: var(--success);
+    }
+
+    .status-inactive {
+      background-color: rgba(239, 71, 111, 0.1);
+      color: var(--danger);
+    }
+
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background-color: transparent;
+      border: none;
+      color: var(--gray);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .action-btn:hover {
+      background-color: var(--light);
+      color: var(--primary);
+    }
+
+    /* 按钮状态样式 */
+    .toggle-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 60px;
+    }
+
+    .toggle-btn .icon {
+      font-size: 14px;
+    }
+
+    .toggle-btn .status-text {
+      margin-left: 6px;
+      font-size: 12px;
+    }
+
+    .toggle-btn .success-text {
+      color: var(--success);
+    }
+
+    .toggle-btn .error-text {
+      color: var(--danger);
+    }
+
+    .toggle-btn[disabled] {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal.show {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-content {
+      background-color: white;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      transform: translateY(-20px);
+      transition: transform 0.3s ease;
+    }
+
+    .modal.show .modal-content {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--gray);
+    }
+
+    .modal-body {
+      padding: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 14px;
+      transition: var(--transition);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+    }
+
+    .modal-footer {
+      padding: 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    .scope-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .scope-card {
+      padding: 15px;
+      border-radius: 8px;
+      background: #f9f9f9;
+      border: 1px solid #eee;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .scope-card:hover {
+      background: #f5f5f5;
+    }
+
+    .scope-card.active {
+      border-color: #4CAF50;
+      background: #f0f9f0;
+    }
+
+    .scope-card-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .scope-card-checkbox {
+      margin-right: 10px;
+      accent-color: #4CAF50;
+    }
+
+    .scope-card-title {
+      font-weight: 500;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .scope-card-icon {
+      margin-right: 10px;
+      color: #666;
+    }
+
+    .scope-card-content {
+      margin-top: 10px;
+      padding-left: 28px;
+      font-size: 13px;
+      color: #666;
+    }
+
+    .url-display {
+      padding: 8px 10px;
+      background: #fff;
+      border-radius: 4px;
+      border: 1px solid #eee;
+      font-size: 13px;
+      color: #555;
+      word-break: break-all;
+    }
+
+    .custom-url-input {
+      margin-top: 8px;
+      width: 100%;
+    }
+
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 24px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked+.slider {
+      background-color: var(--primary);
+    }
+
+    input:checked+.slider:before {
+      transform: translateX(26px);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1><i class="fas fa-sliders-h"></i> 规则管理</h1>
+      <div class="btn-group">
+        <label for="importRules" class="btn btn-outline">
+          <i class="fas fa-file-import"></i> 导入
+          <input id="importRules" type="file" accept=".json" style="display: none;">
+        </label>
+        <button id="exportRules" class="btn btn-outline">
+          <i class="fas fa-file-export"></i> 导出
+        </button>
+        <button id="addRule" class="btn btn-primary">
+          <i class="fas fa-plus"></i> 添加规则
+        </button>
+        <button id="aboutBtn" class="btn btn-outline">
+          <i class="fas fa-info-circle"></i> 关于
+        </button>
+      </div>
+    </div>
+
+    <div class="search-filter">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="搜索规则...">
+      </div>
+      <div class="filter-select">
+        <select id="groupSelect">
+          <option value="all">所有分组</option>
+          <!-- 分组选项将通过JS动态生成 -->
+        </select>
+      </div>
+    </div>
+
+    <table id="rulesTable">
+      <thead>
+        <tr>
+          <th id="nameHeader">规则名称</th>
+          <th id="patternHeader">匹配内容</th>
+          <th id="replacementHeader">替换内容</th>
+          <th id="groupHeader">分组</th>
+          <th id="priorityHeader">优先级</th>
+          <th id="scopeHeader">生效范围</th>
+          <th id="statusHeader">状态</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 规则列表将通过JS动态生成 -->
+      </tbody>
+    </table>
+
+    <!-- 添加/编辑规则模态框 -->
+    <div id="ruleModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="modalTitle">
+            <i class="fas fa-plus-circle"></i> 添加新规则
+          </h3>
+          <button class="modal-close" id="modalCloseBtn">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <form id="ruleForm">
+          <div class="modal-body">
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-tag"></i> 规则名称
+              </label>
+              <input type="text" id="ruleName" class="form-control" placeholder="请输入规则名称" required>
+              <small class="form-text">描述此规则的用途</small>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-search"></i> 匹配内容
+              </label>
+              <input type="text" id="pattern" class="form-control" placeholder="输入要匹配的文本，多个关键词用|分隔" required>
+              <small class="form-text">输入需要被替换的原始文本，多个关键词请用|分隔（如：关键词1|关键词2）</small>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-exchange-alt"></i> 替换内容
+              </label>
+              <input type="text" id="replacement" class="form-control" placeholder="输入替换后的文本" required>
+              <small class="form-text">输入替换后的新文本</small>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label class="form-label">
+                  <i class="fas fa-tags"></i> 分组
+                </label>
+                <input type="text" id="group" class="form-control" placeholder="默认">
+                <small class="form-text">将规则分类管理</small>
+              </div>
+
+              <div class="form-group col-md-6">
+                <label class="form-label">
+                  <i class="fas fa-sort-numeric-up"></i> 优先级
+                </label>
+                <input type="number" id="priority" class="form-control" min="0" value="0">
+                <small class="form-text">数字越大优先级越高</small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-globe"></i> 生效范围
+              </label>
+              <div class="scope-options">
+                <div class="scope-card" id="allSitesCard">
+                  <div class="scope-card-header">
+                    <input type="radio" name="scope" id="allSites" class="scope-card-checkbox" value="all" checked>
+                    <i class="fas fa-globe scope-card-icon"></i>
+                    <div class="scope-card-title">全部网站</div>
+                  </div>
+                </div>
+
+                <div class="scope-card" id="customSiteCard">
+                  <div class="scope-card-header">
+                    <input type="radio" name="scope" id="customSite" class="scope-card-checkbox" value="custom">
+                    <i class="fas fa-edit scope-card-icon"></i>
+                    <div class="scope-card-title">自定义网址</div>
+                  </div>
+                  <div class="scope-card-content">
+                    <input type="text" id="customUrl" class="custom-url-input form-control"
+                      placeholder="输入域名 (如: example.com)" style="display: none;">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-power-off"></i> 状态
+              </label>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="enabled" checked>
+                <label class="form-check-label" for="enabled">启用此规则</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" id="cancelBtn" class="btn btn-outline">
+              <i class="fas fa-times"></i> 取消
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-save"></i> 保存规则
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="../app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>关于 - 文本替换扩展</title>
+    <!-- 复用app.html的样式和资源 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* 复用app.html的样式 */
+        :root {
+            --primary: #4361ee;
+            --primary-hover: #3a56d4;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --border: #dee2e6;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .about-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 24px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .about-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .about-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .about-logo {
+            font-size: 48px;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .about-info {
+            margin-bottom: 24px;
+        }
+
+        .info-item {
+            display: flex;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .info-label {
+            font-weight: 500;
+            min-width: 100px;
+            color: var(--gray);
+        }
+
+        .info-value {
+            flex: 1;
+        }
+
+        .about-footer {
+            text-align: center;
+            margin-top: 24px;
+            color: var(--gray);
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="about-container">
+        <div class="about-header">
+            <div class="about-logo">
+                <i class="fas fa-sliders-h"></i>
+            </div>
+            <h1 class="about-title">文本替换 Text replacement</h1>
+        </div>
+
+        <div class="about-info">
+            <div class="info-item">
+                <div class="info-label">版本</div>
+                <div class="info-value">1.0.0</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">作者</div>
+                <div class="info-value">cayuensui</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">主页</div>
+                <div class="info-value"><a href="https://github.com/cayuensui/Text_replacement" target="_blank">项目主页</a>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">简介</div>
+                <div class="info-value">这是一个用于管理文本替换规则的浏览器扩展，可以帮助您快速修改网页内容。</div>
+            </div>
+        </div>
+
+        <div class="about-footer">
+            如果觉得这个扩展对你有帮助，可以通过在扩展商店给出五星评价或者点击 GitHub 页面上的 Star 按钮来鼓励开发者，非常感谢！
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .float-window {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            z-index: 10000;
+            width: 420px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        .float-window-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .float-window-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .close-button {
+            cursor: pointer;
+            font-size: 22px;
+            color: #888;
+            transition: color 0.2s;
+        }
+
+        .close-button:hover {
+            color: #555;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #444;
+            font-size: 14px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+            transition: border 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        .rules-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+
+        .rule-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f5f5f5;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .rule-item:hover {
+            background: #f9f9f9;
+        }
+
+        .rule-item.active {
+            background: #f0f9f0;
+            border-left: 3px solid #4CAF50;
+        }
+
+        .rule-name {
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .rule-pattern {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 3px;
+        }
+
+        .rule-replacement {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .save-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 15px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .save-button:hover {
+            background: #3d8b40;
+        }
+
+        .no-rules {
+            padding: 20px;
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+        }
+
+        .selected-text-container {
+            position: relative;
+        }
+
+        #selectedText {
+            background-color: #f9f9f9;
+            color: #444;
+            font-weight: 500;
+        }
+
+        #selectedText:focus {
+            background-color: #f0f9f0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="float-window">
+        <div class="float-window-header">
+            <div class="float-window-title">保存到已有规则</div>
+            <div class="close-button">&times;</div>
+        </div>
+        <div class="form-group">
+            <input type="text" id="searchInput" class="search-input" placeholder="搜索规则...">
+        </div>
+        <div class="rules-list" id="rulesList">
+            <div class="no-rules">没有可用的规则</div>
+        </div>
+        <div class="form-group">
+            <label>当前选中的文本</label>
+            <div class="selected-text-container">
+                <input type="text" id="selectedText" class="search-input" readonly>
+            </div>
+        </div>
+        <button class="save-button" id="saveButton">保存到选中规则</button>
+    </div>
+    <script src="existing-rules-window.js"></script>
+</body>
+
+</html>
+
+</html>

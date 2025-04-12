@@ -1,0 +1,48 @@
+{
+    "name": "文本替换",
+    "description": "用于网页文本替换的浏览器扩展",
+    "version": "0.1",
+    "author": "cayuensui",
+    "manifest_version": 3,
+    "action": {
+        "default_icon": "images/icon.png",
+        "default_title": "文本替换工具"
+    },
+    "icons": {
+        "16": "images/icon16.png",
+        "48": "images/icon48.png",
+        "128": "images/icon128.png"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "content_scripts.js"
+            ],
+            "run_at": "document_end",
+            "all_frames": true
+        }
+    ],
+    "permissions": [
+        "storage",
+        "contextMenus",
+        "activeTab",
+        "tabs"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "float-window.html",
+                "existing-rules-window.html"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ]
+}
