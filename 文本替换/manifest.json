@@ -1,8 +1,9 @@
 {
+    "update_url": "https://clients2.google.com/service/update2/crx",
     "name": "文本替换",
     "description": "用于网页文本替换的浏览器扩展",
     "version": "0.1",
-    "author": "cayuensui",
+    "author": "yuensui",
     "manifest_version": 3,
     "action": {
         "default_icon": "images/icon.png",

@@ -60,7 +60,10 @@ class RuleManager {
             nameHeader: document.getElementById('nameHeader'),
             patternHeader: document.getElementById('patternHeader'),
             replacementHeader: document.getElementById('replacementHeader'),
-            scopeHeader: document.getElementById('scopeHeader')
+            scopeHeader: document.getElementById('scopeHeader'),
+            aboutBtn: document.getElementById('aboutBtn'),
+            aboutModal: document.getElementById('aboutModal'),
+            aboutModalCloseBtn: document.getElementById('aboutModalCloseBtn')
         };
     }
 
@@ -79,6 +82,14 @@ class RuleManager {
         });
         this.elements.searchInput.addEventListener('input', () => this.loadRules());
         this.elements.groupSelect.addEventListener('change', () => this.loadRules());
+
+        // 关于按钮事件
+        if (this.elements.aboutBtn) {
+            this.elements.aboutBtn.addEventListener('click', () => this.showAboutModal());
+        }
+        if (this.elements.aboutModalCloseBtn) {
+            this.elements.aboutModalCloseBtn.addEventListener('click', () => this.hideAboutModal());
+        }
 
         // 表头排序
         this.elements.nameHeader.addEventListener('click', () => this.sortRules('name'));
@@ -102,57 +113,6 @@ class RuleManager {
 
         if (importInput) {
             importInput.addEventListener('change', (e) => this.importRules(e));
-        }
-
-        // 添加关于按钮事件
-        const aboutBtn = document.getElementById('aboutBtn');
-        if (aboutBtn) {
-            aboutBtn.addEventListener('click', showAboutModal);
-        }
-
-        function showAboutModal() {
-            // 创建模态框容器
-            const modal = document.createElement('div');
-            modal.className = 'modal show';
-            modal.style.display = 'flex';
-            modal.style.alignItems = 'center';
-            modal.style.justifyContent = 'center';
-            modal.style.backgroundColor = 'rgba(0,0,0,0.5)';
-            modal.style.position = 'fixed';
-            modal.style.top = '0';
-            modal.style.left = '0';
-            modal.style.right = '0';
-            modal.style.bottom = '0';
-            modal.style.zIndex = '1000';
-
-            modal.innerHTML = `
-                <div class="modal-content" style="max-width: 650px; width: 90%; max-height: 90vh; overflow: auto;">
-                    <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; padding: 16px; border-bottom: 1px solid #e9ecef;">
-                        <h3 class="modal-title" style="margin: 0;"><i class="fas fa-info-circle"></i> 关于</h3>
-                        <button class="modal-close" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body" style="padding: 0;">
-                        <iframe src="about.html" style="width: 100%; height: 500px; border: none;"></iframe>
-                    </div>
-                </div>
-            `;
-
-            // 添加到body
-            document.body.appendChild(modal);
-
-            // 关闭按钮事件
-            modal.querySelector('.modal-close').addEventListener('click', () => {
-                document.body.removeChild(modal);
-            });
-
-            // 点击模态框外部关闭
-            modal.addEventListener('click', function (e) {
-                if (e.target === modal) {
-                    document.body.removeChild(modal);
-                }
-            });
         }
     }
 
@@ -593,6 +553,20 @@ class RuleManager {
     // 隐藏模态框
     hideModal() {
         this.elements.ruleModal.classList.remove('show');
+    }
+
+    // 显示关于模态框
+    showAboutModal() {
+        if (this.elements.aboutModal) {
+            this.elements.aboutModal.classList.add('show');
+        }
+    }
+
+    // 隐藏关于模态框
+    hideAboutModal() {
+        if (this.elements.aboutModal) {
+            this.elements.aboutModal.classList.remove('show');
+        }
     }
 
     // 发送消息到background

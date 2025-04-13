@@ -1,6 +1,18 @@
 
 // 现有规则窗口逻辑
 document.addEventListener('DOMContentLoaded', function () {
+    // 显示悬浮提示的函数
+    function showToast(message) {
+        const toast = document.getElementById('toastMessage');
+        toast.textContent = message;
+        toast.classList.add('show');
+
+        // 3秒后自动隐藏
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    }
+
     // 获取DOM元素
     const closeButton = document.querySelector('.close-button');
     const searchInput = document.getElementById('searchInput');
@@ -17,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 关闭窗口
     closeButton.addEventListener('click', function () {
-        window.close();
+        window.parent.postMessage({ type: 'closeFloatWindow' }, '*');
     });
 
     // 获取所有规则
@@ -119,9 +131,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 rule: updatedRule
             }, function (response) {
                 if (response.success) {
-                    alert('规则更新成功');
-                    // 通知content_scripts.js关闭悬浮窗
-                    window.parent.postMessage({ type: 'closeFloatWindow' }, '*');
+                    showToast('规则更新成功');
+                    // 延迟关闭窗口，让用户看到提示
+                    setTimeout(() => {
+                        window.parent.postMessage({ type: 'closeFloatWindow' }, '*');
+                    }, 1500);
                 } else {
                     alert('规则更新失败: ' + (response.error || '未知错误'));
                 }

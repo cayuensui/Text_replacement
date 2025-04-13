@@ -150,10 +150,32 @@
         #selectedText:focus {
             background-color: #f0f9f0;
         }
+
+        .toast-message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(76, 175, 80, 0.9);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 14px;
+            z-index: 10001;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .toast-message.show {
+            opacity: 1;
+            visibility: visible;
+        }
     </style>
 </head>
 
 <body>
+    <div class="toast-message" id="toastMessage"></div>
     <div class="float-window">
         <div class="float-window-header">
             <div class="float-window-title">保存到已有规则</div>
